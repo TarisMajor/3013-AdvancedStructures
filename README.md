@@ -1,4 +1,4 @@
-# 3013-AdvancedStructures
+# 3013-Algorithms
 ### Name: Taris Major
 ### Email: tarismajor@gmail.com or tmajor0707@my.msutexas.edu
 ### Image: 
