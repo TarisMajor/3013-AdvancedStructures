@@ -2,4 +2,4 @@
 
 |   #   | Folder Link | Assignment Description |
 | :---: | ----------- | ---------------------- |
-|   0   | link 0      | description 0          |
+|   1   | [P02](./P02/README.md)      | [Linear Search Using JSON](./P02/README.md)          |
