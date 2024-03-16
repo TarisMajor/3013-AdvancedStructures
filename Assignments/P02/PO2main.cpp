@@ -1,3 +1,25 @@
+/*****************************************************************************
+*                    
+*  Author:           Taris Major
+*  Email:            tmajor0707@my.msutexas.edu
+*  Label:            P02
+*  Title:            Linear Search - Using Json and Getch
+*  Course:           CMPS 3013
+*  Semester:         Spring 2024
+* 
+*  Description:
+*        This program looks through a JSON dictionary file to autocomplete a word
+*        being typed in the terminal.
+*        
+*  Usage: 
+*       - $ ./main filename
+*       - This will read in a file containing whatever values to be read into our list/array. 
+*       
+*  Files:            
+*       P02main.cpp          : driver program 
+*       dictionary.json      : JSON file with words in the dictionary
+*
+*****************************************************************************/
 #include "./headers/console.hpp"
 #include "./headers/json.hpp"
 #include "./headers/rang.hpp"
@@ -12,20 +34,36 @@ using namespace std;
 using namespace rang;
 using json = nlohmann::json;
 
-void wordSearch(vector<string> &matchingWords, string& partialKey, int& iterations, bool deleting)
+    /**
+     * Public : wordSearch
+     * 
+     * Description:
+     *      Looks through the vector of matching words and filters them each time the function is called
+     * 
+     * Params:
+     *      [vector<string>]    :  vector of strings
+     *      [int]               :  number of times the function is called
+     *      [string]            :  string used to filter the vector
+     * 
+     * Returns:
+     *      Nothing
+     */
+void wordSearch(vector<string> &matchingWords, string& partialKey, int& iterations)
 {
-    vector<string> tempMWords;
-
+    vector<string> tempMWords;                          // Create an empty vector
+                                                        // Loop through all the matching words
     for(int i = 0; i < matchingWords.size(); i++)
     {
-        string temp = matchingWords[i];
+        string temp = matchingWords[i];                 // Get the word
+                                                        // Check each letter
         if(temp[iterations] >= partialKey[iterations])
            {
-                tempMWords.push_back(temp);
+                tempMWords.push_back(temp);             // If they match, put the word in the temp vector
            }
      }   
-    matchingWords = tempMWords;
-    iterations++;
+    matchingWords = tempMWords;                         // Equate the two vectors
+    iterations++;                                       // Increment the amount of times the function was 
+                                                        // called
 }
 
 void errorMessage(string message) {
@@ -35,18 +73,16 @@ void errorMessage(string message) {
 
 int main(int argc, char **argv) {
 
-    Timer T;   // create a timer
-    char k; //holds the character being typed
+    Timer T;                          // Create a timer
+    char k;                           // Holds the character being typed
+    vector<string> tempWords;         // Temp vector used in wordSearch function
+    int iterations = 0;               // Holds integer value for amount of times wordSearch function is called
+    string key;                       // Holds string value of matches from dictionary JSON file
+    string substr = "";               // Var to concatenate letters to
+    bool deleting = false;            // Bool to determine whether the deleting the last key pressed in 
+                                      // the console
     
-    vector<string> tempWords;
-    int iterations = 0;
-    string key;
-    string substr = "";              // var to concatenate letters to
-    bool deleting = false;
-    
-    T.Start(); //Start timer to see how long it takes to load Json File
-
-    // Load your JSON object as shown in previous examples
+    // Load JSON object
     std::string filePath = "./data/dictionary.json";
     std::ifstream fileStream(filePath);
     json myJson;
@@ -58,8 +94,7 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    //printf("Nanoseconds: %.17f\n", (double)T.NanoSeconds() / 1000000000);
-
+// While Z is not pressed in the terminal, loop through
 while ((k = getch()) != 'Z') 
 {
     clearConsole();
@@ -86,30 +121,18 @@ while ((k = getch()) != 'Z')
       if ((int)k < 97) {
         k += 32;
       }
-      substr += k; // append char to substr
+      substr += k;                  // append char to substr
     }
 
-    // Find any animals in the array that partially match
-    // our substr word
-    //matches = partialMatch(animals, substr);
-
-    if ((int)k != 32) { // if k is not a space print it
+    if ((int)k != 32) {             // if k is not a space print it
 
       for (auto &c : substr)
         c = tolower(c);
 
-        cout << substr << endl;
-    
-
-    // The substring you are looking for in the keys
-   
-       /*  if (argc == 1)
-            partialKey = partialKey;
-        else
-            partialKey = argv[1];
- */
+        cout << substr << endl;     // Outputs to the terminal the current string being searched
+ 
         vector<string> matchingWords;
-        T.Start();
+        T.Start();                  // Start timer to see how long it takes to load Json File
         // Iterate over all key-value pairs
         for (auto &element : myJson.items()) 
         {
@@ -117,32 +140,31 @@ while ((k = getch()) != 'Z')
             key = element.key();
             
             // Check if the key contains the partialKey substring
-            //if (key.find(partialKey) != std::string::npos) 
-            //{
-            // Found a match, do something with it
             if(key.find(substr) != string::npos)
             {
+                // Found a match
                 if(substr <= key)
+                // Filter out all words that doesn't begin with the substring
                 matchingWords.push_back(key);
-                //std::cout << "Found partial match: " << key << std::endl;
             }
             
         }    
-
+        // Filter matchingWords vector 
         for(int i = 0; i < substr.size(); i++)
         {
-            wordSearch(matchingWords, substr, iterations, deleting);
+            wordSearch(matchingWords, substr, iterations);
         }
         T.End();
 
         cout << matchingWords.size() << " words found in " << (double)T.NanoSeconds() / 100000000 << " seconds" << endl;
 
+        //If there are less than 10 matches
         if(matchingWords.size() < 10)
         {
              for(int i = 0; i < matchingWords.size(); i++)
-        {
-            cout << matchingWords[i] << " ";
-        }
+                {
+                    cout << matchingWords[i] << " ";
+                }
         } 
         else
         {
