@@ -15,6 +15,12 @@ This program looks through a JSON dictionary file to autocomplete a word being t
 
 - Make sure you download `json.hpp`
 - My program expects the user to start inputting the word they want searched in the terminal
-- Example Output:
-  
-![P02-1](https://github.com/TarisMajor/3013-AdvancedStructures/assets/151577662/d1fc5380-e599-47b7-a10e-5e9c9244be94)
+- Example Outputs:
+
+![pic1](https://github.com/TarisMajor/3013-AdvancedStructures/assets/151577662/bfd62379-6027-4ef5-81d7-aeaf1b4c80c7)
+
+![pic2](https://github.com/TarisMajor/3013-AdvancedStructures/assets/151577662/473a03d9-228d-442e-ba0b-80472964b866)
+
+![pic3](https://github.com/TarisMajor/3013-AdvancedStructures/assets/151577662/69d4434a-dce0-463d-9f6b-77da012d189e)
+
+![pic4](https://github.com/TarisMajor/3013-AdvancedStructures/assets/151577662/23bba9ff-47eb-478d-b117-750e85d1dd18)
