@@ -1,3 +1,25 @@
+/*****************************************************************************
+*                    
+*  Author:           Taris Major
+*  Email:            tmajor0707@my.msutexas.edu
+*  Label:            P02
+*  Title:            Linear Search - Using Json and Getch
+*  Course:           CMPS 3013
+*  Semester:         Spring 2024
+* 
+*  Description:
+*        This program looks through a JSON dictionary file to autocomplete a word
+*        being typed in the terminal.
+*        
+*  Usage: 
+*       - $ ./main filename
+*       - This will read in a file containing whatever values to be read into our list/array. 
+*       
+*  Files:            
+*       P02main.cpp          : driver program 
+*       dictionary.json      : JSON file with words in the dictionary
+*
+*****************************************************************************/
 #include "./headers/console.hpp"
 #include "./headers/json.hpp"
 #include "./headers/rang.hpp"
